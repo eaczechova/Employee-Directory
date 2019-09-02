@@ -4,6 +4,7 @@
 
 body {
   font-family: 'Lato', sans-serif;
+  overflow-x:hidden;
 }
 
 header {
@@ -45,7 +46,7 @@ header {
 }
 
 .employee__photo {
-  width: 80px;
+  width: 100px;
   border-radius: 50%;
   margin: 20px;
 }
@@ -73,7 +74,7 @@ header {
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 50px;
   left: 0;
   top: 0;
   width: 100%;
@@ -85,13 +86,15 @@ header {
 }
 
 .modal-content {
-  width: 28%;
+  width: 70%;
   margin: 0 auto;
   text-align: center;
   background-color: rgb(255,255,255);
   border-radius: 5px;
   border: 1px solid lightgray;
   display: block;
+  height: 70vh;
+  overflow: scroll;
 }
 
 .modal-content > div {
@@ -107,7 +110,7 @@ header {
 }
 
 .modal__photo {
-  width: 130px;
+  width: 70px;
   border-radius: 50%;
   margin-top: 5px;
 }
@@ -130,7 +133,7 @@ header {
 .arrow-right, .arrow-left {
   font-size: 80px;
   color: #fff;
-  padding: 50px 100px;
+  /* padding: 50px 100px; */
   cursor: pointer;
 }
 
@@ -169,22 +172,33 @@ header {
   }
 
   .employee ul {
-    font-size: 15px;
+    font-size: 10px;
   }
 
   .employee li:first-child {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .employee__photo {
     width: 100px;
   }
 
+  .modal {
+    padding-top: 20px;
+  }
+
+  .modal-content {
+    width: 40%;
+    height: 90vh;
+  }
+
+  .modal__photo {
+    width: 100px;
+  }
 }
 
 @media (min-width: 1020px) {
   main {
-
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-gap: 20px;
@@ -194,11 +208,7 @@ header {
 
   .employee {
     margin-bottom: 0;
-    max-width: 350px
-  }
-
-  .employee ul {
-    font-size: 12px;
+    max-width: 375px
   }
 
   .employee li:first-child {
