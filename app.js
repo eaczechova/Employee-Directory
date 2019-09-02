@@ -1,5 +1,6 @@
 const containerElement = document.querySelector('.container');
 const url = 'https://randomuser.me/api/?results=12&nat=us';
+const input = document.getElementById('employee-search');
 
 // ------------------------------------------
 //  FETCH FUNCTION
@@ -9,21 +10,27 @@ fetch(url)
   .then(response => response.json())
   .then(data => {
     generateEmployeeCard(data);
+    filterEmployees();
   })
   .catch(error => console.log('error is', error));
 
 function generateEmployeeCard(data) {
 
   let listOfEmployees = data.results;
+  let userInput = null;
   let modal;
+
+  // The program maps over results returned from the fetch request
+  // and creates employee cards (with modal)
+
   listOfEmployees.map( (item, index) => {
+
     let employeeElement = document.createElement("div");
 
     let date = item.dob.date.slice(0, 10).replace(/-/g,"/");
     let firstName = item.name.first.charAt(0).toUpperCase() + item.name.first.slice(1);
     let lastName = item.name.last.charAt(0).toUpperCase() + item.name.last.slice(1);
     let city = item.location.city.charAt(0).toUpperCase() + item.location.city.slice(1);
-
 
     employeeElement.classList.add("employee");
     employeeElement.setAttribute('data-index', `${index+1}`);
@@ -62,7 +69,10 @@ function generateEmployeeCard(data) {
     employeeElement.appendChild(modal);
     containerElement.appendChild(employeeElement);
 
-  })
+  });
+
+  // The program loops over modal elements and opens modal
+  // matching index of the clicked element
 
   containerElement.addEventListener('click', function(e) {
     let index = e.target.getAttribute('data-index');
@@ -77,7 +87,12 @@ function generateEmployeeCard(data) {
       }
     }});
 
+
+  // The program loops over modal elements and adds event listner on click event;
+  // that either closes modal or moves it back/forward
+
   const modalsCollection = document.querySelectorAll('.modal');
+
   for(let i = 0 ; i < modalsCollection.length; i++) {
     modalsCollection[i].addEventListener('click', function(e) {
       let index = e.target.getAttribute('data-index');
@@ -95,5 +110,26 @@ function generateEmployeeCard(data) {
     });
   }
 };
+
+// ------------------------------------------
+//  FILTER FUNCTION
+// ------------------------------------------
+
+function filterEmployees() {
+  const employeeCards = document.querySelectorAll('.employee > ul');
+  input.addEventListener('keyup', function(e) {
+    let searchInput = e.target.value.toLowerCase();
+    employeeCards.forEach(function(item) {
+
+      let employeeDataCheck = item.children[0].textContent.toLowerCase();
+
+      if(employeeDataCheck.indexOf(searchInput) > -1) {
+        item.parentNode.style.display="flex";
+      } else {
+        item.parentNode.style.display="none";
+      }
+    });
+  });
+}
 
 generateEmployeeCard(url);
